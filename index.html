@@ -1,16 +1,41 @@
-    <!DOCTYPE html>
-    <html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
         <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="stylesheet" href="reset.css" />
-            <link rel="stylesheet" href="styles.css" />
-            <title>Monkeys Card Game</title>
+            <link rel="stylesheet" href="style.css" />
+            <title>Bate Papo da Uol </title>
 </head>
 <body>
 
+        <div class="topo">
+            <img src="img/logo.png">
+            <ion-icon name="people"></ion-icon>
+        </div>
+    
+        <div class="chat">
+                <div class="msg-status">
+                    <span><span class="time">(09:21:45)</span> <span class="user">João</span> <span class="texto">entra na sala... </span>
+                    </span>
+                </div>
+                <div class="msg-normal">
+                    <span><span class="time">(09:21:45)</span> <span class="user">Maria</span> <span class="texto"> para </span> <span class="destinatario">João</span> <span class="texto"> Oi joao seu feio lindo catiguento e cheiroso, Oi joao seu feio lindo catiguento e cheiroso, Oi joao seu feio lindo catiguento e cheiroso, Oi joao seu feio lindo catiguento e cheiroso, Oi joao seu feio lindo catiguento e cheiroso, Oi joao seu feio lindo catiguento e cheiroso </span>
+                </div>
+                <div class="msg-privada">
+                    
+                </div>
+        </div>
+    
+        <div class="msg-box">
+            <input placeholder="Escreva aqui..."></input>
+            <ion-icon onclick="sendMsg()" name="paper-plane-outline"></ion-icon>
+        </div>
     
 
-    <script src="scripts.js"></script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
