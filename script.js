@@ -1,13 +1,14 @@
 function login() {
     usuario = prompt('Escreva o seu lindo nome:')
-    console.log(`Usuário: ${usuario}`);
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants",{name:usuario});
-    promise.then(setInterval(usuarioOnline,5000));
+    promise.then(usuarioOnline);
     promise.catch(naoEntrou);
 }
 function usuarioOnline() {
-   console.log(`USUÁRIO: ${usuario}`)
+   console.log(`Login efetuado!`)
+   online();
+   
 }
 function naoEntrou(erro) {
         alert("Nome já está em uso, insira outro nome");
@@ -15,8 +16,11 @@ function naoEntrou(erro) {
 }
 
 function online() {
-
-
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {name:usuario});
+    promise.then(setInterval(continuaOnline, 5000));
+}
+function continuaOnline() {
+    console.log(`Usuário online: ${usuario}`);
 }
 
 
