@@ -1,5 +1,6 @@
+usuario = prompt('Escreva o seu lindo nome:')
+
 function login() {
-    usuario = prompt('Escreva o seu lindo nome:')
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants",{name:usuario});
     promise.then(usuarioOnline);
@@ -7,7 +8,7 @@ function login() {
 }
 function usuarioOnline() {
    console.log(`Login efetuado!`)
-   online();
+   setInterval(online, 5000);
    
 }
 function naoEntrou(erro) {
@@ -17,7 +18,7 @@ function naoEntrou(erro) {
 
 function online() {
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", {name:usuario});
-    promise.then(setInterval(continuaOnline, 5000));
+    promise.then(continuaOnline);
 }
 function continuaOnline() {
     console.log(`Usuário online: ${usuario}`);
@@ -32,7 +33,7 @@ function recebeMensagens() {
 function recebendo(resposta) {
     chat = resposta.data;
     
-    for (let i=0 ; i<20 ; i++) {
+    for (let i=0 ; i<chat.length ; i++) {
         divchat = document.querySelector(".chat");
         if (chat[i].type === "status") {
             divchat.innerHTML += `
@@ -59,11 +60,26 @@ function recebendo(resposta) {
     } 
     document.querySelector('.chat div:last-of-type').scrollIntoView()
 
-  
-    
 }
 
+function enviarMensagem() {
+    let msgInput = document.querySelector(".msg-box input").value;
 
+    mensagem = {
+            from: usuario,
+            to: "Todos",
+            text: msgInput,
+            type: "message" // ou "private_message" para o bônus
+    }
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
+    promise.then(mensagemEnviada);
+
+}
+function mensagemEnviada() {
+   console.log(`Mensagem enviada com sucesso`);
+   
+} 
 
 
 login();
