@@ -13,7 +13,7 @@ function usuarioOnline() {
 }
 function naoEntrou(erro) {
         alert("Nome já está em uso, insira outro nome");
-        login();
+        refresh();
 }
 
 function online() {
@@ -94,6 +94,35 @@ document.addEventListener("keypress", function(e) {
     
     }
   });
+
+let sidebar = document.querySelector(".sidebar");
+
+function participantes() {
+    sidebar.classList.add("aparece");
+    setInterval(transicao,100);
+}
+
+function voltaChat () {
+    sidebar.classList.remove("aparece");
+    setInterval(transicao,100)
+}
+
+function transicao () {
+    let teste = document.querySelector(".aparece");
+    if (teste) {
+        sidebar.classList.add("transicao");
+    } else {
+        sidebar.classList.remove("transicao");
+    }
+    
+}
+
+
+
+
+
+
+
 
 function refresh() {
     window.location.reload();
