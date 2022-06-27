@@ -9,7 +9,7 @@ function login() {
 function usuarioOnline() {
    console.log(`Login efetuado!`)
    setInterval(online, 5000);
-   
+   recebeMensagens();
 }
 function naoEntrou(erro) {
         alert("Nome já está em uso, insira outro nome");
@@ -33,8 +33,13 @@ function recebeMensagens() {
 function recebendo(resposta) {
     chat = resposta.data;
     
+    divchat = document.querySelector(".chat");
+    divchat.innerHTML = "";
+
+
     for (let i=0 ; i<chat.length ; i++) {
-        divchat = document.querySelector(".chat");
+        
+
         if (chat[i].type === "status") {
             divchat.innerHTML += `
             <div class="msg-status">
@@ -73,17 +78,28 @@ function enviarMensagem() {
     }
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
-    promise.then(mensagemEnviada);
+    promise.then(recebeMensagens);
+    promise.catch(refresh);
 
+    document.querySelector(".msg-box input").value = "";
 }
-function mensagemEnviada() {
-   console.log(`Mensagem enviada com sucesso`);
-   
-} 
 
+document.addEventListener("keypress", function(e) {
+    if(e.key === 'Enter') {
+    
+        let btn = document.querySelector("#submit");
+      
+      btn.click();
+    
+    }
+  });
+
+function refresh() {
+    window.location.reload();
+}
 
 login();
-recebeMensagens();
+
 setInterval(recebeMensagens,3000);
 
 
