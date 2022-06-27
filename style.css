@@ -94,11 +94,12 @@ body {
 }
 span.user, span.destinatario {
     font-weight: 700;
+
 }
 span.time {
     color: #AAAAAA;
 }
-span.texto {
+span.texto, span.user, span.destinatario {
     word-break: break-word;
     line-height: 20px;
 }

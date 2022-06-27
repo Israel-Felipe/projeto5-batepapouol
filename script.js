@@ -51,18 +51,19 @@ function recebendo(resposta) {
         else if (chat[i].type === "message") {
             divchat.innerHTML += `
             <div class="msg-normal">
-            <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> para </span> <span class="destinatario">${chat[i].to}</span><span class="texto"> ${chat[i].text}</span>
+            <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> para </span> <span class="destinatario">${chat[i].to}:</span><span class="texto"> ${chat[i].text}</span>
             </div>
             `
         }
-        else if (chat[i].type === "private_message") {
+        else if (chat[i].type === "private_message" && chat[i].to === usuario) {
             divchat.innerHTML += `
             <div class="msg-privada">
-            <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> reservadamente para </span> <span class="destinatario">${chat[i].to}</span><span class="texto"> ${chat[i].text}</span>
+            <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> reservadamente para </span> <span class="destinatario">${chat[i].to}:</span><span class="texto"> ${chat[i].text}</span>
             </div>
             `
         }
-    } 
+    }
+
     document.querySelector('.chat div:last-of-type').scrollIntoView()
 
 }
