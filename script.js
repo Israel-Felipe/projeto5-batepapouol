@@ -100,6 +100,7 @@ let sidebar = document.querySelector(".sidebar");
 function participantes() {
     sidebar.classList.add("aparece");
     setInterval(transicao,100);
+    buscarParticipantes();
 }
 
 function voltaChat () {
@@ -116,11 +117,64 @@ function transicao () {
     }
     
 }
+/* dwwewq */
+
+function buscarParticipantes () {
+    const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promise.then(recebendoParticipantes);
+}
+
+function recebendoParticipantes(resposta) {
+    participante = resposta.data;
+    console.log(participante)
+    
+    divparticipante = document.querySelector(".lista");
+    divparticipante.innerHTML = `<div class="participante" onclick="selecionarparticipante(this)">
+                                      <div class="between">
+                                      <ion-icon name="people"></ion-icon>
+                                     <span>Todos</span>
+                                    </div>
+                                    <div class="icone"><img src="img/icone.svg" alt=""></div>
+                                </div>`;
+
+
+    for (let i=0 ; i<participante.length ; i++) {
+         divparticipante.innerHTML += `
+         <div class="participante" onclick="selecionarparticipante(this)">
+            <div class="between">
+            <ion-icon name="person-circle"></ion-icon>
+            <span>${participante[i].name}</span>
+            </div>
+            <div class="icone"><img src="img/icone.svg" alt=""></div>
+        </div>
+`
+    }
+
+    document.querySelector('.lista div:last-of-type').scrollIntoView()
+
+}
+/* sdwdqdwq */
 
 
 
 
+function selecionarparticipante(elemento) {
+    const check = document.querySelector(".lista .ativo");
+    
+    if (check !== null) {
+        check.classList.remove("ativo"); 
+      }
+      elemento.querySelector(".icone").classList.add("ativo");
+}
 
+function selecionarvisibilidade(elemento) {
+    const check = document.querySelector(".visibilidade .ativo");
+    
+    if (check !== null) {
+        check.classList.remove("ativo"); 
+      }
+      elemento.querySelector(".icone").classList.add("ativo");
+}
 
 
 
@@ -132,6 +186,7 @@ login();
 
 setInterval(recebeMensagens,3000);
 
+setInterval(buscarParticipantes,10000);
 
 
 

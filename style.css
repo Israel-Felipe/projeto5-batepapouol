@@ -175,3 +175,67 @@ span.texto, span.user, span.destinatario {
     transition: opacity 500ms ease-out;
 }
 
+.textoSide {
+    width: 100%;
+    height: 84px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.textoSide p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.lista, .visibilidade {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    display: inline-flex;
+    overflow-y: scroll;
+}
+.visibilidade {
+    margin-top: -20px;
+}
+
+.participante, .visibilidadeparticipante {
+    width: 100%;
+    height: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.participante:hover, .visibilidadeparticipante:hover {
+    background-color: #ecd6d6;
+}
+.between {
+    display: flex;
+    align-items: center;
+}
+.between span {
+    font-size: 16px;
+    margin-left: 7px;
+    margin-top: 3px;
+}
+
+.between ion-icon {
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+.icone {
+    width: 9px;
+    height: 7px;
+    margin-right: 30px;
+    display: none;
+    margin-top: -3px;
+}
+
+.ativo {
+    display: inherit;
+}
