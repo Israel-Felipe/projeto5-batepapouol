@@ -55,7 +55,7 @@ function recebendo(resposta) {
             </div>
             `
         }
-        else if (chat[i].type === "private_message" && chat[i].to === usuario) {
+        else if (chat[i].type === "private_message" && (chat[i].to === usuario || chat[i].from === usuario) {
             divchat.innerHTML += `
             <div class="msg-privada">
             <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> reservadamente para </span> <span class="destinatario">${chat[i].to}:</span><span class="texto"> ${chat[i].text}</span>
@@ -67,6 +67,33 @@ function recebendo(resposta) {
     document.querySelector('.chat div:last-of-type').scrollIntoView()
 
 }
+
+function enviarMensagem() {
+    let msgInput = document.querySelector(".msg-box input").value;
+
+    mensagem = {
+            from: usuario,
+            to: "Todos",
+            text: msgInput,
+            type: "message" // ou "private_message" para o bônus
+    }
+
+    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
+    promise.then(recebeMensagens);
+    promise.catch(refresh);
+
+    document.querySelector(".msg-box input").value = "";
+}
+
+document.addEventListener("keypress", function(e) {
+    if(e.key === 'Enter') {
+    
+        let btn = document.querySelector("#submit");
+      
+      btn.click();
+    
+    }
+  });
 
 let sidebar = document.querySelector(".sidebar");
 
@@ -98,6 +125,7 @@ function buscarParticipantes () {
 
 function recebendoParticipantes(resposta) {
     participante = resposta.data;
+    console.log(participante)
     
     divparticipante = document.querySelector(".lista");
     divparticipante.innerHTML = `<div class="participante" onclick="selecionarparticipante(this)">
@@ -105,7 +133,7 @@ function recebendoParticipantes(resposta) {
                                       <ion-icon name="people"></ion-icon>
                                      <span>Todos</span>
                                     </div>
-                                    <div class="icone ativo"><img src="img/icone.svg" alt=""></div>
+                                    <div class="icone"><img src="img/icone.svg" alt=""></div>
                                 </div>`;
 
 
@@ -121,43 +149,19 @@ function recebendoParticipantes(resposta) {
 `
 }
 }
-let participanteselecionado = "Todos";
+
+
+
 
 
 function selecionarparticipante(elemento) {
     const check = document.querySelector(".lista .ativo");
     
-    
     if (check !== null) {
         check.classList.remove("ativo"); 
       }
       elemento.querySelector(".icone").classList.add("ativo");
-
-      participanteselecionado = elemento.querySelector(".lista span"); /* pegar nome do elemento selecionado */
- 
-    }
-
-function participanteseleciado() {
-    selecionado = "Todos";
-
-
-
-    if (participanteselecionado !== "Todos") {
-        selecionado = `${participanteselecionado.innerHTML}`;
-    }
-    if (selecionado !== "Todos") {
-        document.querySelector(".mensagempara").innerHTML = `Mensagem para ${selecionado}`;
-
-        document.querySelector(".mensagempara").classList.add("ativo");
-    } else {
-        document.querySelector(".mensagempara").classList.remove("ativo");
-    }
-    
-
 }
-setInterval(participanteseleciado, 1000);
-
-
 
 function selecionarvisibilidade(elemento) {
     const check = document.querySelector(".visibilidade .ativo");
@@ -165,36 +169,9 @@ function selecionarvisibilidade(elemento) {
     if (check !== null) {
         check.classList.remove("ativo"); 
       }
-     elemento.querySelector(".icone").classList.add("ativo"); 
-}
-function enviarMensagem() {
-    let msgInput = document.querySelector(".msg-box input").value;
-    
-    
-   /*  participanteselecionado.innerHTML */
-    mensagem = {
-            from: usuario,
-            to: selecionado,
-            text: msgInput,
-            type: "message" // ou "private_message" para o bônus
-    }
-
-    const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
-    promise.then(recebeMensagens);
-    promise.catch(refresh);
-
-    document.querySelector(".msg-box input").value = "";
+      elemento.querySelector(".icone").classList.add("ativo");
 }
 
-document.addEventListener("keypress", function(e) {
-    if(e.key === 'Enter') {
-    
-        let btn = document.querySelector("#submit");
-      
-      btn.click();
-    
-    }
-  });
 
 
 function refresh() {
@@ -206,6 +183,8 @@ login();
 setInterval(recebeMensagens,3000);
 
 setInterval(buscarParticipantes,10000);
+
+
 
 
 

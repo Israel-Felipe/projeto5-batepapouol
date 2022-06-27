@@ -236,6 +236,17 @@ span.texto, span.user, span.destinatario {
     margin-top: -3px;
 }
 
+
+.mensagempara {
+    margin-top: 53px;
+    margin-left: 20px;
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    z-index: 2;
+    display: none;
+}
+
 .ativo {
     display: inherit;
 }
