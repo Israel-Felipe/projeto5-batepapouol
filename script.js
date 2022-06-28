@@ -28,8 +28,11 @@ function continuaOnline() {
 function recebeMensagens() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promise.then(recebendo);
+    promise.catch(erro)
 }
-
+function erro(erro) {
+    console.log("errrooo")
+}
 function recebendo(resposta) {
     chat = resposta.data;
     
@@ -55,7 +58,7 @@ function recebendo(resposta) {
             </div>
             `
         }
-        else if (chat[i].type === "private_message" && chat[i].to === usuario) {
+        else if (chat[i].type === "private_message") { /* colocar ainda pra aparecer só pra mim */
             divchat.innerHTML += `
             <div class="msg-privada">
             <span><span class="time">(${chat[i].time})</span> <span class="user">${chat[i].from}</span> <span class="texto"> reservadamente para </span> <span class="destinatario">${chat[i].to}:</span><span class="texto"> ${chat[i].text}</span>
@@ -156,8 +159,9 @@ function participanteseleciado() {
 
 }
 setInterval(participanteseleciado, 1000);
+/* visibilidade */
 
-
+let visibilidadeselecionado = "Público";
 
 function selecionarvisibilidade(elemento) {
     const check = document.querySelector(".visibilidade .ativo");
@@ -165,19 +169,53 @@ function selecionarvisibilidade(elemento) {
     if (check !== null) {
         check.classList.remove("ativo"); 
       }
-     elemento.querySelector(".icone").classList.add("ativo"); 
+     elemento.querySelector(".icone").classList.add("ativo");
+     
+     visibilidadeselecionado = elemento.querySelector(".visibilidade span");
 }
+publicoselecionado = "Público";
+function visibilidadeseleciado() {
+    
+    
+
+    if (visibilidadeselecionado !== "Público") {
+        publicoselecionado = `${visibilidadeselecionado.innerHTML}`;
+    }
+    
+    if (publicoselecionado == "Público") {
+        document.querySelector(".mensagempara").classList.remove("ativo");
+    } else {
+        document.querySelector(".mensagempara").innerHTML = `Mensagem reservada para ${selecionado}`;
+        document.querySelector(".mensagempara").classList.add("ativo");
+    }
+
+}
+setInterval(visibilidadeseleciado, 1000);
+
+let typemsg = "message";
+
+function publicose() {
+if(publicoselecionado == "Público") {
+    typemsg = "message"
+} else if (publicoselecionado == "Reservadamente") {
+    typemsg = "private_message"
+}
+}
+setInterval(publicose, 1000);
+
+console.log(typemsg);
+
 function enviarMensagem() {
     let msgInput = document.querySelector(".msg-box input").value;
     
     
-   /*  participanteselecionado.innerHTML */
+
     mensagem = {
             from: usuario,
             to: selecionado,
             text: msgInput,
-            type: "message" // ou "private_message" para o bônus
-    }
+            type: typemsg // ou "private_message" para o bônus
+    }   
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem);
     promise.then(recebeMensagens);
